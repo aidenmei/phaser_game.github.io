@@ -58,12 +58,13 @@ function preload() {
         spacing: 1
 
     });
-    //music: small
+    
+    //music 
     this.load.audio('jumpSmall', 'assets/audio/tread.wav');
-    //music: super
+    
     this.load.audio('jumpSuper', 'assets/audio/tread.wav');
-    //music: super
-    this.load.audio('coin', 'assets/audio/add star.wav');
+    
+    this.load.audio('coins', 'assets/audio/add star.wav');
 }
 
 function create() {
@@ -180,7 +181,7 @@ function create() {
 
     this.jumpSmallMusic = this.sound.add('jumpSmall');
     this.jumpSuperMusic = this.sound.add('jumpSuper');
-    this.coinMusic = this.sound.add('coin');
+    this.coinMusic = this.sound.add('coins');
 
     // 
     this.input.on('pointerdown', function () {});
@@ -312,9 +313,7 @@ function update() {
 }
 //MARK:- collect star
 function collectStar(player, star) {
-    this.coinMusic.play({
-        volume: 0.1
-    });
+   
     star.disableBody(true, true);
 
     //  Add and update the score
@@ -329,6 +328,8 @@ function collectStar(player, star) {
 
         });
 
+        
+
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
         var bomb = bombs.create(x, 16, 'bomb');
@@ -341,7 +342,10 @@ function collectStar(player, star) {
 }
 // MARK:- hit bomb
 function hitBomb(player, bomb) {
-    this.physics.pause();
+    //this.physics.pause();
+    this.coinMusic.play({
+        volume: 0.1
+    });
 
     player.setTint(0xff0000);
 
@@ -349,3 +353,4 @@ function hitBomb(player, bomb) {
 
     gameOver = true;
 }
+    
