@@ -273,6 +273,8 @@ function update() {
     //MARK: -  Y position + music 
     if (this.spaceBar.isDown && player.body.touching.down && this.jumpTimer === 0) {
         this.jumpTimer = 1;
+        
+      
         // this.jumpSmallMusic.play({volume: 0.1});
         player.setVelocityY(-135);
     } else if (this.spaceBar.isDown && this.jumpTimer > 0 && this.jumpTimer <= 30) {
@@ -313,7 +315,9 @@ function update() {
 }
 //MARK:- collect star
 function collectStar(player, star) {
-   
+    this.coinMusic.play({
+        volume: 0.1
+    });
     star.disableBody(true, true);
 
     //  Add and update the score
@@ -342,12 +346,10 @@ function collectStar(player, star) {
 }
 // MARK:- hit bomb
 function hitBomb(player, bomb) {
-    //this.physics.pause();
-    this.coinMusic.play({
-        volume: 0.1
-    });
+    this.physics.pause();
+    
 
-    player.setTint(0xff0000);
+    player.setTint();
 
     player.anims.play('stand');
 
