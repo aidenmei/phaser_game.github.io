@@ -224,7 +224,6 @@ function update() {
 
     } else {
         //2. on the ground 
-        /* */
         if (cursors.left.isDown) {
             this.isCanLeft = true;
             this.isCanRight = false;
