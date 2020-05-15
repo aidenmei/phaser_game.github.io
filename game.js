@@ -25,6 +25,7 @@ var bombs;
 var platforms;
 var cursors;
 var score = 0;
+var liveCounter = 3;
 var gameOver = false;
 var scoreText;
 // var jumpTimer = 0;
@@ -43,15 +44,15 @@ function init() {
 }
 
 function preload() {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    // this.load.spritesheet('dude', 'assets/dude.png', {
+    this.load.image('sky', '/assets/sky.png');
+    this.load.image('ground', '/assets/platform.png');
+    this.load.image('star', '/assets/star.png');
+    this.load.image('bomb', '/assets/bomb.png');
+    // this.load.spritesheet('dude', '/assets/dude.png', {
     //     frameWidth: 32,
     //     frameHeight: 48
     // });
-    this.load.spritesheet('mario', 'assets/mario.png', {
+    this.load.spritesheet('mario', '/assets/mario.png', {
         frameWidth: 16,
         frameHeight: 16,
         margin: 1,
@@ -60,11 +61,12 @@ function preload() {
     });
     
     //music 
-    this.load.audio('jumpSmall', 'assets/audio/tread.wav');
+
+    //this.load.audio('jumpSmall', '/assets/audio/tread.wav');
     
-    this.load.audio('jumpSuper', 'assets/audio/tread.wav');
+    //this.load.audio('jumpSuper', '/assets/audio/tread.wav');
     
-    this.load.audio('coins', 'assets/audio/add star.wav');
+    this.load.audio('coins', '/assets/audio/add star.wav');
 }
 
 function create() {
@@ -161,6 +163,13 @@ function create() {
         fill: '#000'
     });
     scoreText.setScrollFactor(0);
+    //  The live counter
+    liveCounterText = this.add.text(16, 45, 'liveCounter: 3', {
+        fontSize: '32px',
+        fill: '#000'
+    });
+    liveCounterText.setScrollFactor(0);
+    
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(player, platforms, function () {
         // console.log('hit ground');
@@ -179,8 +188,8 @@ function create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.cameras.main.startFollow(player, true, 0.08, 0.08);
 
-    this.jumpSmallMusic = this.sound.add('jumpSmall');
-    this.jumpSuperMusic = this.sound.add('jumpSuper');
+    //this.jumpSmallMusic = this.sound.add('jumpSmall');
+    //this.jumpSuperMusic = this.sound.add('jumpSuper');
     this.coinMusic = this.sound.add('coins');
 
     // 
@@ -265,7 +274,6 @@ function update() {
             console.log("ground left player.velocity.x", player.body.velocity.x);
         }
 
-        /* */
 
 
     }
@@ -288,15 +296,11 @@ function update() {
                 if (isSuper) {
                     isSuper = false;
                     isSmall = false;
-                    this.jumpSuperMusic.play({
-                        volume: 0.1
-                    });
+                    
                 }
             }
             if (isSmall) {
-                this.jumpSmallMusic.play({
-                    volume: 0.1
-                });
+                
                 isSmall = false;
             }
 
@@ -321,7 +325,7 @@ function collectStar(player, star) {
     star.disableBody(true, true);
 
     //  Add and update the score
-    score += 1;
+    score += 10;
     scoreText.setText('Score: ' + score);
 
     if (stars.countActive(true) === 0) {
@@ -346,13 +350,27 @@ function collectStar(player, star) {
 }
 // MARK:- hit bomb
 function hitBomb(player, bomb) {
-    this.physics.pause();
-    
+    this.coinMusic.play({
+        volume: 0.1
+    });
 
-    player.setTint();
-
-    player.anims.play('stand');
-
-    gameOver = true;
+    //  Add and update the live
+    liveCounter -= 1;
+    liveCounterText.setText('liveCounter: ' + liveCounter);
+    if(liveCounter <= 0){
+        player.disableBody(true, true);
+        bomb.disableBody(true, true);
+        gameOver = true;
+    }
+    //  remove the else block if you want to let the bomb stay in the game after it hit mario
+    else{
+        bomb.disableBody(true, true);
+        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        var bomb = bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        bomb.allowGravity = false;
+    }
 }
     
