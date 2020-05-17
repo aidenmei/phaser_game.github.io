@@ -44,15 +44,15 @@ function init() {
 }
 
 function preload() {
-    this.load.image('sky', 'sky.png');
-    this.load.image('ground', 'platform.png');
-    this.load.image('star', 'star.png');
-    this.load.image('bomb', 'bomb.png');
+    this.load.image('sky', '/assets/sky.png');
+    this.load.image('ground', '/assets/platform.png');
+    this.load.image('star', '/assets/star.png');
+    this.load.image('bomb', '/assets/bomb.png');
     // this.load.spritesheet('dude', '/assets/dude.png', {
     //     frameWidth: 32,
     //     frameHeight: 48
     // });
-    this.load.spritesheet('mario', 'mario.png', {
+    this.load.spritesheet('mario', '/assets/mario.png', {
         frameWidth: 16,
         frameHeight: 16,
         margin: 1,
@@ -64,9 +64,9 @@ function preload() {
 
     //this.load.audio('jumpSmall', '/assets/audio/tread.wav');
     
-    this.load.audio('lives', 'lost life.mp3');
+    this.load.audio('lives', '/assets/lost life.mp3');
     
-    this.load.audio('coins', 'add star.mp3');
+    this.load.audio('coins', '/assets/add star.mp3');
 }
 
 function create() {
