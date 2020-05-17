@@ -64,9 +64,9 @@ function preload() {
 
     //this.load.audio('jumpSmall', '/assets/audio/tread.wav');
     
-    this.load.audio('lives', '/assets/lost life.wav');
+    this.load.audio('lives', '/assets/lost life.mp3');
     
-    this.load.audio('coins', '/assets/add star.wav');
+    this.load.audio('coins', '/assets/add star.mp3');
 }
 
 function create() {
