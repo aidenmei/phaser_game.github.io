@@ -64,9 +64,9 @@ function preload() {
 
     //this.load.audio('jumpSmall', '/assets/audio/tread.wav');
     
-    //this.load.audio('lives', '/assets/audio/lost life.wav');
+    this.load.audio('lives', '/assets/lost life.wav');
     
-    this.load.audio('coins', '/assets/audio/add star.wav');
+    this.load.audio('coins', '/assets/add star.wav');
 }
 
 function create() {
@@ -189,7 +189,7 @@ function create() {
     this.cameras.main.startFollow(player, true, 0.08, 0.08);
 
     //this.jumpSmallMusic = this.sound.add('jumpSmall');
-    //this.lostLife = this.sound.add('lives');
+    this.lostLife = this.sound.add('lives');
     this.coinMusic = this.sound.add('coins');
 
     // 
@@ -349,7 +349,7 @@ function collectStar(player, star) {
 }
 // MARK:- hit bomb
 function hitBomb(player, bomb) {
-    this.coinMusic.play({
+    this.lostLife.play({
         volume: 0.1
     });
 
